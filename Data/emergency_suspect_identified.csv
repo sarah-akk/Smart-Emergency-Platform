@@ -1,0 +1,99 @@
+text,severity,class,subclass
+"يا جماعة، عرفنا المشتبه فيه بسرقة بحي المزة بدمشق، بدنا الشرطة فوري!",6,POLICE,suspect_identified
+"شباب، لقينا هوية المشتبه فيه باعتداء بحي الشيخ مقصود بحلب، تعالوا بسرعة!",7,POLICE,suspect_identified
+"يا شرطة، تم تحديد مشتبه فيه قرب سوق القابون بدمشق، ساعدوا!",5,POLICE,suspect_identified
+"عرفنا مين المشتبه فيه بدير الزور قرب الجسر، بدو شرطة عاجل!",8,POLICE,suspect_identified
+"يا جماعة، المشتبه فيه بجريمة بحي الخالدية بحمص معروف، بسرعة!",6,POLICE,suspect_identified
+"حددوا مشتبه فيه بسرقة سيارة باللاذقية قرب الكورنيش، بدنا الشرطة!",7,POLICE,suspect_identified
+"يا شباب، عرفنا المشتبه فيه بحي التضامن بدمشق، جيبو الشرطة!",5,POLICE,suspect_identified
+"لقينا هوية مشتبه فيه بالسويداء قرب السوق، بدو شرطة حالا!",6,POLICE,suspect_identified
+"يا جماعة، المشتبه فيه بجريمة قتل بحي الميدان بدمشق معروف، ساعدوا!",8,POLICE,suspect_identified
+"عرفنا مين المشتبه فيه بحي الصالحية بحلب، بدنا الشرطة فوري!",7,POLICE,suspect_identified
+"شباب، حددوا مشتبه فيه قرب مبنى بدير الزور، تعالوا بسرعة!",6,POLICE,suspect_identified
+"المشتبه فيه بسرقة بحي القصور بحمص معروف، بدو شرطة!",5,POLICE,suspect_identified
+"يا جماعة، عرفنا هوية مشتبه فيه بحي الحميدية بدمشق، بسرعة!",7,POLICE,suspect_identified
+"حددوا مشتبه فيه باعتداء بحي الصالحية بحلب، بدنا الشرطة!",6,POLICE,suspect_identified
+"يا شباب، لقينا المشتبه فيه بحي الشيخ سعد بدير الزور، ساعدوا!",8,POLICE,suspect_identified
+"عرفنا المشتبه فيه بجريمة بحي المزة بدمشق، بدو شرطة فوري!",5,POLICE,suspect_identified
+"يا جماعة، مشتبه فيه معروف قرب سوق اللاذقية، تعالوا!",6,POLICE,suspect_identified
+"لقينا هوية المشتبه فيه بحي الخالدية بحمص، بدنا الشرطة!",7,POLICE,suspect_identified
+"شباب، عرفنا مين المشتبه فيه بحي التضامن بدمشق، جيبو الشرطة!",5,POLICE,suspect_identified
+"المشتبه فيه بسرقة بحي الفردوس بحلب معروف، بدو شرطة!",8,POLICE,suspect_identified
+"يا جماعة، حددوا مشتبه فيه قرب مبنى بحي القابون بدمشق، بسرعة!",6,POLICE,suspect_identified
+"عرفنا المشتبه فيه بدير الزور قرب السوق، بدنا الشرطة!",7,POLICE,suspect_identified
+"يا شباب، لقينا هوية مشتبه فيه بحي الميدان بدمشق، تعالوا!",5,POLICE,suspect_identified
+"المشتبه فيه باعتداء بحي القصور بحمص معروف، بدو شرطة!",6,POLICE,suspect_identified
+"يا جماعة، عرفنا مين المشتبه فيه بحي الحميدية بدمشق، ساعدوا!",8,POLICE,suspect_identified
+"حددوا مشتبه فيه بحي الصالحية بحلب، بدنا الشرطة فوري!",7,POLICE,suspect_identified
+"يا شباب، المشتبه فيه بحي الشيخ سعد بدير الزور معروف، بسرعة!",6,POLICE,suspect_identified
+"لقينا هوية مشتبه فيه بالسويداء، بدو شرطة حالا!",5,POLICE,suspect_identified
+"يا جماعة، عرفنا المشتبه فيه بحي المزة بدمشق، تعالوا!",7,POLICE,suspect_identified
+"المشتبه فيه بسرقة باللاذقية قرب الكورنيش معروف، بدنا الشرطة!",6,POLICE,suspect_identified
+"شباب، حددوا مشتبه فيه بحي الخالدية بحمص، ساعدوا!",8,POLICE,suspect_identified
+"يا جماعة، عرفنا مين المشتبه فيه بحي التضامن بدمشق، بسرعة!",5,POLICE,suspect_identified
+"لقينا هوية مشتبه فيه بحي الفردوس بحلب، بدو شرطة!",6,POLICE,suspect_identified
+"يا شباب، المشتبه فيه قرب مبنى بحي القابون بدمشق معروف، تعالوا!",7,POLICE,suspect_identified
+"عرفنا المشتبه فيه بدير الزور قرب الجسر، بدنا الشرطة!",5,POLICE,suspect_identified
+"يا جماعة، حددوا مشتبه فيه بحي الميدان بدمشق، ساعدوا!",8,POLICE,suspect_identified
+"المشتبه فيه بجريمة بحي القصور بحمص معروف، بدو شرطة!",6,POLICE,suspect_identified
+"شباب، عرفنا هوية مشتبه فيه بحي الحميدية بدمشق، تعالوا!",7,POLICE,suspect_identified
+"لقينا المشتبه فيه بحي الصالحية بحلب، بدنا الشرطة!",5,POLICE,suspect_identified
+"يا جماعة، المشتبه فيه بحي الشيخ سعد بدير الزور معروف، بسرعة!",6,POLICE,suspect_identified
+"عرفنا مين المشتبه فيه بالسويداء قرب السوق، بدو شرطة!",8,POLICE,suspect_identified
+"يا شباب، حددوا مشتبه فيه بحي المزة بدمشق، ساعدوا!",7,POLICE,suspect_identified
+"المشتبه فيه بسرقة باللاذقية قرب السوق معروف، بدنا الشرطة!",5,POLICE,suspect_identified
+"يا جماعة، عرفنا هوية مشتبه فيه بحي الخالدية بحمص، تعالوا!",6,POLICE,suspect_identified
+"لقينا المشتبه فيه بحي التضامن بدمشق، بدو شرطة فوري!",8,POLICE,suspect_identified
+"شباب، المشتبه فيه بحي الفردوس بحلب معروف، ساعدوا!",7,POLICE,suspect_identified
+"يا جماعة، عرفنا مين المشتبه فيه بحي القابون بدمشق، بسرعة!",5,POLICE,suspect_identified
+"حددوا مشتبه فيه بدير الزور قرب السوق، بدنا الشرطة!",6,POLICE,suspect_identified
+"يا شباب، المشتبه فيه بحي الميدان بدمشق معروف، تعالوا!",7,POLICE,suspect_identified
+"عرفنا هوية مشتبه فيه بحي القصور بحمص، بدو شرطة!",5,POLICE,suspect_identified
+"يا جماعة، لقينا المشتبه فيه بحي الحميدية بدمشق، ساعدوا!",8,POLICE,suspect_identified
+"المشتبه فيه باعتداء بحي الصالحية بحلب معروف، بدنا الشرطة!",6,POLICE,suspect_identified
+"شباب، عرفنا مين المشتبه فيه بحي الشيخ سعد بدير الزور، بسرعة!",7,POLICE,suspect_identified
+"يا جماعة، حددوا مشتبه فيه بالسويداء، تعالوا!",5,POLICE,suspect_identified
+"لقينا المشتبه فيه بحي المزة بدمشق، بدو شرطة فوري!",6,POLICE,suspect_identified
+"يا شباب، عرفنا هوية مشتبه فيه باللاذقية قرب الكورنيش، ساعدوا!",8,POLICE,suspect_identified
+"المشتبه فيه بحي الخالدية بحمص معروف، بدنا الشرطة!",7,POLICE,suspect_identified
+"يا جماعة، حددوا مشتبه فيه بحي التضامن بدمشق، تعالوا!",5,POLICE,suspect_identified
+"عرفنا مين المشتبه فيه بحي الفردوس بحلب، بدو شرطة!",6,POLICE,suspect_identified
+"شباب، المشتبه فيه قرب مبنى بحي القابون بدمشق معروف، ساعدوا!",7,POLICE,suspect_identified
+"يا جماعة، لقينا هوية مشتبه فيه بدير الزور قرب الجسر، تعالوا!",5,POLICE,suspect_identified
+"المشتبه فيه بحي الميدان بدمشق معروف، بدنا الشرطة!",8,POLICE,suspect_identified
+"يا شباب، عرفنا مين المشتبه فيه بحي القصور بحمص، ساعدوا!",6,POLICE,suspect_identified
+"حددوا مشتبه فيه بحي الحميدية بدمشق، بدو شرطة فوري!",7,POLICE,suspect_identified
+"يا جماعة، المشتبه فيه بحي الصالحية بحلب معروف، تعالوا!",5,POLICE,suspect_identified
+"لقينا هوية مشتبه فيه بحي الشيخ سعد بدير الزور، بدنا الشرطة!",6,POLICE,suspect_identified
+"شباب، عرفنا المشتبه فيه بالسويداء قرب السوق، ساعدوا!",8,POLICE,suspect_identified
+"يا جماعة، المشتبه فيه بحي المزة بدمشق معروف، بدو شرطة!",7,POLICE,suspect_identified
+"حددوا مشتبه فيه بسرقة باللاذقية قرب السوق، بدنا الشرطة!",5,POLICE,suspect_identified
+"يا شباب، عرفنا هوية مشتبه فيه بحي الخالدية بحمص، تعالوا!",6,POLICE,suspect_identified
+"لقينا المشتبه فيه بحي التضامن بدمشق، بدو شرطة!",8,POLICE,suspect_identified
+"يا جماعة، المشتبه فيه بحي الفردوس بحلب معروف، ساعدوا!",7,POLICE,suspect_identified
+"عرفنا مين المشتبه فيه بحي القابون بدمشق، بدنا الشرطة!",5,POLICE,suspect_identified
+"شباب، حددوا مشتبه فيه بدير الزور قرب السوق، تعالوا!",6,POLICE,suspect_identified
+"يا جماعة، المشتبه فيه بحي الميدان بدمشق معروف، ساعدوا!",7,POLICE,suspect_identified
+"لقينا هوية مشتبه فيه بحي القصور بحمص، بدو شرطة!",5,POLICE,suspect_identified
+"يا شباب، عرفنا مين المشتبه فيه بحي الحميدية بدمشق، تعالوا!",8,POLICE,suspect_identified
+"المشتبه فيه بحي الصالحية بحلب معروف، بدنا الشرطة!",6,POLICE,suspect_identified
+"يا جماعة، حددوا مشتبه فيه بحي الشيخ سعد بدير الزور، ساعدوا!",7,POLICE,suspect_identified
+"عرفنا المشتبه فيه بالسويداء، بدو شرطة فوري!",5,POLICE,suspect_identified
+"شباب، لقينا هوية مشتبه فيه بحي المزة بدمشق، تعالوا!",6,POLICE,suspect_identified
+"يا جماعة، المشتبه فيه باللاذقية قرب الكورنيش معروف، ساعدوا!",8,POLICE,suspect_identified
+"حددوا مشتبه فيه بحي الخالدية بحمص، بدنا الشرطة!",7,POLICE,suspect_identified
+"يا شباب، عرفنا مين المشتبه فيه بحي التضامن بدمشق، تعالوا!",5,POLICE,suspect_identified
+"لقينا المشتبه فيه بحي الفردوس بحلب، بدو شرطة!",6,POLICE,suspect_identified
+"يا جماعة، المشتبه فيه بحي القابون بدمشق معروف، ساعدوا!",7,POLICE,suspect_identified
+"عرفنا هوية مشتبه فيه بدير الزور قرب الجسر، بدنا الشرطة!",5,POLICE,suspect_identified
+"شباب، المشتبه فيه بحي الميدان بدمشق معروف، تعالوا!",8,POLICE,suspect_identified
+"يا جماعة، حددوا مشتبه فيه بحي القصور بحمص، ساعدوا!",6,POLICE,suspect_identified
+"لقينا المشتبه فيه بحي الحميدية بدمشق، بدو شرطة!",7,POLICE,suspect_identified
+"يا شباب، عرفنا هوية مشتبه فيه بحي الصالحية بحلب، تعالوا!",5,POLICE,suspect_identified
+"المشتبه فيه بحي الشيخ سعد بدير الزور معروف، بدنا الشرطة!",6,POLICE,suspect_identified
+"يا جماعة، حددوا مشتبه فيه بالسويداء، ساعدوا!",8,POLICE,suspect_identified
+"عرفنا مين المشتبه فيه بحي المزة بدمشق، بدو شرطة!",7,POLICE,suspect_identified
+"شباب، المشتبه فيه باللاذقية قرب السوق معروف، تعالوا!",5,POLICE,suspect_identified
+"يا جماعة، لقينا هوية مشتبه فيه بحي الخالدية بحمص، ساعدوا!",6,POLICE,suspect_identified
+"المشتبه فيه بحي التضامن بدمشق معروف، بدنا الشرطة!",8,POLICE,suspect_identified
+"يا شباب، عرفنا مين المشتبه فيه بحي الفردوس بحلب، تعالوا!",7,POLICE,suspect_identified

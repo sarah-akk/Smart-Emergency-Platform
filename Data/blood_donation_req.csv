@@ -1,0 +1,100 @@
+text,severity,class,subclass
+"يا جماعة، في شب مصاب بحادث سيارة بحي المزة بدمشق، محتاج دم فصيلة O+ بسرعة بمشفى الوطني!",8,CIVIL,blood_donation_req
+"مريض بحاجة ماسة لدم فصيلة A- بحلب، الوضع خطير بمشفى الجامعي!",9,CIVIL,blood_donation_req
+"طفلة صغيرة بدا دم فصيلة B+ بمشفى الأطفال بحمص، بالله ساعدوا بسرعة!",10,CIVIL,blood_donation_req
+"في مريض بحالة حرجة بدير الزور، محتاجين دم AB- فوراً بمشفى الأسد!",9,CIVIL,blood_donation_req
+"شاب تعرض لحادث دراجة باللاذقية، بدو دم O- بمشفى التشرين، الوضع عاجل!",8,CIVIL,blood_donation_req
+"امرأة حامل بحاجة لدم فصيلة A+ بدمشق، بمشفى المواساة، ساعدوا!",7,CIVIL,blood_donation_req
+"في مريض بعملية جراحية بحلب، محتاجين دم B- بسرعة بمشفى الرازي!",9,CIVIL,blood_donation_req
+"يا شباب، مريض بالسرطان بحاجة دم O+ بحمص، بمشفى الباسل، الوضع حرج!",10,CIVIL,blood_donation_req
+"في مصاب بحادث بالطريق الدولي بدير الزور، بدو دم A- فوراً!",8,CIVIL,blood_donation_req
+"طفل محتاج دم AB+ بمشفى الأطفال بدمشق، ساعدوا الوضع خطير!",9,CIVIL,blood_donation_req
+"مريض بحاجة دم O- بحلب، بمشفى الكندي، بالله ساعدوا بسرعة!",8,CIVIL,blood_donation_req
+"في حالة طارئة بمشفى الشامي بدمشق، محتاجين دم B+ فوراً!",7,CIVIL,blood_donation_req
+"شاب مصاب بحادث بالسويداء، بدو دم A+ بمشفى الشهيد، ساعدوا!",8,CIVIL,blood_donation_req
+"امرأة بتعمل عملية بدير الزور، محتاجة دم O+ بمشفى الأسد!",9,CIVIL,blood_donation_req
+"في طفل مريض بدمشق، بدو دم AB- بمشفى الأطفال، الوضع حرج!",10,CIVIL,blood_donation_req
+"مريض بحاجة دم B- بحلب، بمشفى الجامعي، ساعدوا بسرعة!",8,CIVIL,blood_donation_req
+"يا جماعة، في مصاب بحادث سيارة بحمص، محتاج دم A- بمشفى الباسل!",9,CIVIL,blood_donation_req
+"طفلة بحاجة دم O+ بدمشق، بمشفى المواساة، الوضع عاجل!",7,CIVIL,blood_donation_req
+"في مريض بعملية قلب بحلب، بدو دم AB+ بمشفى الرازي!",10,CIVIL,blood_donation_req
+"شاب مصاب بحادث باللاذقية، محتاج دم B+ بمشفى التشرين!",8,CIVIL,blood_donation_req
+"امرأة حامل بحاجة دم A+ بدمشق، بمشفى الشامي، ساعدوا!",9,CIVIL,blood_donation_req
+"في مريض بالسرطان بحمص، محتاج دم O- بمشفى الباسل!",8,CIVIL,blood_donation_req
+"طفل مصاب بحادث بدير الزور، بدو دم AB- بمشفى الأسد!",9,CIVIL,blood_donation_req
+"يا شباب، مريض بحاجة دم B- بحلب، بمشفى الكندي، الوضع حرج!",7,CIVIL,blood_donation_req
+"في حالة طارئة بدمشق، محتاجين دم O+ بمشفى الوطني!",8,CIVIL,blood_donation_req
+"مريض بحاجة دم A- بحمص، بمشفى الأطفال، ساعدوا بسرعة!",9,CIVIL,blood_donation_req
+"شاب مصاب بحادث بالسويداء، بدو دم AB+ بمشفى الشهيد!",8,CIVIL,blood_donation_req
+"امرأة بعملية جراحية بدمشق، محتاجة دم B+ بمشفى المواساة!",7,CIVIL,blood_donation_req
+"طفلة بحاجة دم O- بحلب، بمشفى الرازي، الوضع خطير!",9,CIVIL,blood_donation_req
+"في مريض بحادث سيارة باللاذقية، بدو دم A+ بمشفى التشرين!",8,CIVIL,blood_donation_req
+"يا جماعة، مريض بحاجة دم AB- بدمشق، بمشفى الشامي!",10,CIVIL,blood_donation_req
+"شاب مصاب بحادث بحمص، محتاج دم B- بمشفى الباسل!",8,CIVIL,blood_donation_req
+"طفل بحاجة دم O+ بدير الزور، بمشفى الأسد، ساعدوا!",9,CIVIL,blood_donation_req
+"امرأة حامل بحاجة دم A- بدمشق، بمشفى الوطني!",7,CIVIL,blood_donation_req
+"في مريض بعملية جراحية بحلب، بدو دم AB+ بمشفى الكندي!",8,CIVIL,blood_donation_req
+"يا شباب، طفلة مصابة بحادث بالسويداء، محتاجة دم B+!",9,CIVIL,blood_donation_req
+"مريض بحاجة دم O- بحمص، بمشفى الأطفال، الوضع حرج!",10,CIVIL,blood_donation_req
+"شاب مصاب بحادث باللاذقية، بدو دم A+ بمشفى التشرين!",8,CIVIL,blood_donation_req
+"في حالة طارئة بدمشق، محتاجين دم AB- بمشفى المواساة!",9,CIVIL,blood_donation_req
+"طفل بحاجة دم B- بدير الزور، بمشفى الأسد، ساعدوا!",7,CIVIL,blood_donation_req
+"امرأة بعملية جراحية بحلب، محتاجة دم O+ بمشفى الرازي!",8,CIVIL,blood_donation_req
+"يا جماعة، مريض بحاجة دم A- بدمشق، بمشفى الشامي!",9,CIVIL,blood_donation_req
+"شاب مصاب بحادث بحمص، محتاج دم AB+ بمشفى الباسل!",8,CIVIL,blood_donation_req
+"طفلة بحاجة دم O- بالسويداء، بمشفى الشهيد، الوضع خطير!",10,CIVIL,blood_donation_req
+"في مريض بعملية قلب بدمشق، بدو دم B+ بمشفى الوطني!",9,CIVIL,blood_donation_req
+"يا شباب، مريض بحاجة دم A+ بحلب، بمشفى الكندي!",8,CIVIL,blood_donation_req
+"امرأة حامل بحاجة دم AB- بحمص، بمشفى الأطفال!",7,CIVIL,blood_donation_req
+"طفل مصاب بحادث بدير الزور، بدو دم O+ بمشفى الأسد!",9,CIVIL,blood_donation_req
+"في حالة طارئة باللاذقية، محتاجين دم B- بمشفى التشرين!",8,CIVIL,blood_donation_req
+"شاب بحاجة دم A- بدمشق، بمشفى المواساة، ساعدوا!",7,CIVIL,blood_donation_req
+"مريض بعملية جراحية بحلب، بدو دم AB+ بمشفى الرازي!",9,CIVIL,blood_donation_req
+"طفلة بحاجة دم O- بحمص، بمشفى الباسل، الوضع حرج!",10,CIVIL,blood_donation_req
+"يا جماعة، شاب مصاب بحادث بالسويداء، محتاج دم B+!",8,CIVIL,blood_donation_req
+"امرأة حامل بحاجة دم A+ بدمشق، بمشفى الشامي!",9,CIVIL,blood_donation_req
+"في مريض بحادث سيارة بدير الزور، بدو دم AB-!",8,CIVIL,blood_donation_req
+"طفل بحاجة دم O+ بحلب، بمشفى الكندي، ساعدوا!",7,CIVIL,blood_donation_req
+"مريض بعملية جراحية باللاذقية، بدو دم B- بمشفى التشرين!",9,CIVIL,blood_donation_req
+"يا شباب، طفلة مصابة بحادث بدمشق، محتاجة دم A-!",8,CIVIL,blood_donation_req
+"شاب بحاجة دم AB+ بحمص، بمشفى الباسل، الوضع خطير!",10,CIVIL,blood_donation_req
+"في حالة طارئة بالسويداء، محتاجين دم O+ بمشفى الشهيد!",9,CIVIL,blood_donation_req
+"امرأة بعملية جراحية بدمشق، بدو دم B+ بمشفى المواساة!",8,CIVIL,blood_donation_req
+"طفل مصاب بحادث بحلب، محتاج دم A+ بمشفى الرازي!",7,CIVIL,blood_donation_req
+"يا جماعة، مريض بحاجة دم AB- بدير الزور، بمشفى الأسد!",9,CIVIL,blood_donation_req
+"شاب مصاب بحادث باللاذقية، بدو دم O- بمشفى التشرين!",8,CIVIL,blood_donation_req
+"طفلة بحاجة دم B- بحمص، بمشفى الأطفال، ساعدوا!",7,CIVIL,blood_donation_req
+"في مريض بعملية قلب بدمشق، بدو دم A+ بمشفى الوطني!",9,CIVIL,blood_donation_req
+"يا شباب، مريض بحاجة دم O+ بحلب، بمشفى الكندي!",8,CIVIL,blood_donation_req
+"امرأة حامل بحاجة دم AB- بالسويداء، بمشفى الشهيد!",10,CIVIL,blood_donation_req
+"طفل مصاب بحادث بدمشق، بدو دم B+ بمشفى المواساة!",9,CIVIL,blood_donation_req
+"في حالة طارئة بحمص، محتاجين دم A- بمشفى الباسل!",8,CIVIL,blood_donation_req
+"شاب بحاجة دم O- بدير الزور، بمشفى الأسد، ساعدوا!",7,CIVIL,blood_donation_req
+"مريض بعملية جراحية باللاذقية، بدو دم AB+ بمشفى التشرين!",9,CIVIL,blood_donation_req
+"يا جماعة، طفلة مصابة بحادث بحلب، محتاجة دم B-!",8,CIVIL,blood_donation_req
+"امرأة حامل بحاجة دم A+ بدمشق، بمشفى الشامي!",7,CIVIL,blood_donation_req
+"في مريض بحادث سيارة بالسويداء، بدو دم O+ بمشفى الشهيد!",9,CIVIL,blood_donation_req
+"طفل بحاجة دم AB- بحمص، بمشفى الأطفال، الوضع حرج!",10,CIVIL,blood_donation_req
+"شاب مصاب بحادث بدمشق، بدو دم B+ بمشفى الوطني!",8,CIVIL,blood_donation_req
+"يا شباب، مريض بحاجة دم A- بحلب، بمشفى الرازي!",9,CIVIL,blood_donation_req
+"امرأة بعملية جراحية بدير الزور، بدو دم O- بمشفى الأسد!",7,CIVIL,blood_donation_req
+"طفلة بحاجة دم AB+ باللاذقية، بمشفى التشرين، ساعدوا!",8,CIVIL,blood_donation_req
+"في حالة طارئة بدمشق، محتاجين دم B- بمشفى المواساة!",9,CIVIL,blood_donation_req
+"شاب مصاب بحادث بحمص، بدو دم A+ بمشفى الباسل!",8,CIVIL,blood_donation_req
+"يا جماعة، مريض بحاجة دم O+ بالسويداء، بمشفى الشهيد!",7,CIVIL,blood_donation_req
+"طفل بحاجة دم AB- بحلب، بمشفى الكندي، الوضع خطير!",9,CIVIL,blood_donation_req
+"امرأة حامل بحاجة دم B+ بدمشق، بمشفى الشامي!",8,CIVIL,blood_donation_req
+"في مريض بحادث سيارة بدير الزور، بدو دم A- بمشفى الأسد!",7,CIVIL,blood_donation_req
+"شاب مصاب بحادث باللاذقية، بدو دم O+ بمشفى التشرين!",9,CIVIL,blood_donation_req
+"طفلة بحاجة دم B- بحمص، بمشفى الأطفال، ساعدوا!",8,CIVIL,blood_donation_req
+"يا شباب، مريض بحاجة دم AB+ بدمشق، بمشفى الوطني!",7,CIVIL,blood_donation_req
+"امرأة بعملية جراحية بحلب، بدو دم A+ بمشفى الرازي!",9,CIVIL,blood_donation_req
+"في حالة طارئة بالسويداء، محتاجين دم O- بمشفى الشهيد!",8,CIVIL,blood_donation_req
+"طفل مصاب بحادث بدمشق، بدو دم B+ بمشفى المواساة!",7,CIVIL,blood_donation_req
+"يا جماعة، مريض بحاجة دم AB- بحمص، بمشفى الباسل!",9,CIVIL,blood_donation_req
+"شاب مصاب بحادث بحلب، بدو دم A- بمشفى الكندي!",8,CIVIL,blood_donation_req
+"امرأة حامل بحاجة دم O+ بدير الزور، بمشفى الأسد!",7,CIVIL,blood_donation_req
+"طفلة بحاجة دم B- باللاذقية، بمشفى التشرين، الوضع حرج!",9,CIVIL,blood_donation_req
+"في مريض بعملية جراحية بدمشق، بدو دم AB+ بمشفى الشامي!",8,CIVIL,blood_donation_req
+"شاب بحاجة دم A+ بحمص، بمشفى الأطفال، ساعدوا!",7,CIVIL,blood_donation_req
+"يا جماعة، مريض بحاجة دم O- بالسويداء، بمشفى الشهيد!",9,CIVIL,blood_donation_req
