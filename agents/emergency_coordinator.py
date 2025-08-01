@@ -11,6 +11,8 @@ class EmergencyState(TypedDict):
     user_input: str
     location: str | None
     emergency_type: str | None
+    emergency_subtype :  str | None
+    severity :  str | None
     missing_info: dict | None
     safety_tips: list | None
     response_unit: dict | str | None
@@ -18,19 +20,47 @@ class EmergencyState(TypedDict):
 
 # 1. Define your node functions
 def detect_emergency_type(state):
-    emergency_type = emergency_type_agent.run(state["user_input"])
-    state["emergency_type"] = emergency_type
-    print("\n[🔍 التصنيف]:", emergency_type)
-    state["report"] += f"\n🧠 التصنيف: {emergency_type}"
+    result = emergency_type_agent.run(state["user_input"])
+
+    if isinstance(result, str):
+        import json
+        try:
+            result = json.loads(result)
+        except:
+            result = {"type": result, "subtype": "غير معروف", "severity": "غير معروف"}
+
+    state["emergency_type"] = result["type"]
+    state["emergency_subtype"] = result["subtype"]
+    state["severity"] = result["severity"]
+    print(f"\n[🔍 التصنيف]: {result}")
+    state["report"] += (
+        f"\n🧠 التصنيف:\n- النوع: {result['type']}\n- النوع الفرعي: {result['subtype']}\n- الخطورة: {result['severity']}"
+    )
     return state
 
+# =============================================================>
+
 def detect_missing_info(state):
-    prompt_text = f"نوع الطارئ: {state['emergency_type']}\nالبلاغ: {state['user_input']}"
-    missing_info = get_missing_info_agent.run({"input": prompt_text})
+    emergency_type = state.get("emergency_type", "UNKNOWN")
+    emergency_subtype = state.get("emergency_subtype", "")
+    user_input = state.get("user_input", "")
+    
+    if emergency_type == "UNKNOWN":
+        print("[⚠️ نوع الطارئ غير معروف]")
+        state["missing_info"] = "❌ لا يمكن تحديد المعلومات الناقصة بدون نوع الطارئ."
+        return state
+
+    input_text = f"بلاغ المستخدم: {user_input}\nنوع الطارئ: {emergency_type}\nالنوع الفرعي: {emergency_subtype}"
+
+    missing_info = get_missing_info_agent.run({"input": input_text})
+
     state["missing_info"] = missing_info
     print("\n[🔍 المعلومات الناقصة]:", missing_info)
     state["report"] += f"\n📋 معلومات ناقصة مقترحة: {missing_info}"
     return state
+
+# =============================================================>
+
 
 def ask_for_missing_info_text(state):
     print("\n📝 الرجاء تزويدنا بمعلومات إضافية حول البلاغ (أي نص):")
@@ -39,12 +69,26 @@ def ask_for_missing_info_text(state):
     state["report"] += f"\n📝 معلومات أضافها المستخدم: {user_text}"
     return state
 
+
+# =============================================================>
+
+
 def get_safety_tips(state):
-    prompt_text = f"نوع الطارئ: {state['emergency_type']}\nالبلاغ: {state['user_input']}"
-    safety_tips = get_safety_tips_agent.run({"input": prompt_text})
-    state["safety_tips"] = safety_tips
-    print("\n[🔍 ارشادات السلامة]:", safety_tips)
+    emergency_type = state.get("emergency_type", "UNKNOWN")
+    emergency_subtype = state.get("emergency_subtype", "")
+    user_input = state.get("user_input", "")
+
+
+    input_text = f"بلاغ المستخدم: {user_input}\nنوع الطارئ: {emergency_type}\nالنوع الفرعي: {emergency_subtype}"
+
+    missing_info = get_safety_tips_agent.run({"input": input_text})
+
+    state["safety_tips"] = missing_info
+    print("\n[🔍 ارشادات السلامة]:", missing_info)
     return state
+
+# =============================================================>
+
 
 def get_response_unit_node(state):
     location = state.get("location")
@@ -61,6 +105,9 @@ def get_response_unit_node(state):
 
 
     return state
+
+
+# =============================================================>
 
 def build_emergency_coordinator_graph():
  

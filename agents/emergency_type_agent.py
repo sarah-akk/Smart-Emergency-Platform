@@ -17,10 +17,11 @@ subclass_encoder = preprocessing["subclass_encoder"]
 max_len = preprocessing.get("max_length", 100)
 severity_scaler = preprocessing.get("severity_scaler", None)
 
-# Load trained model
 
 model = tf.saved_model.load("Models/arabic_emergency_marbert_model")
 infer = model.signatures["serving_default"]
+
+# //=============================================================>
 
 @tool(description="يصنف نوع الحالة وخطورتها باستخدام النموذج المدرب.")
 def classify_emergency(text: str) -> dict:
@@ -57,8 +58,11 @@ def classify_emergency(text: str) -> dict:
             if severity_scaler else float(severity_value)
         )
 
-        return class_label
-         
+        return {
+            "type": class_label,
+            "subtype": subclass_label,
+            "severity": severity_label
+        }         
         
 
     except Exception as e:
@@ -66,7 +70,7 @@ def classify_emergency(text: str) -> dict:
         return {"type": "غير معروف", "subtype": "غير معروف", "severity": "غير معروف"}
 
 
-
+# //=============================================================>
 
 # Create agent
 emergency_type_agent = initialize_agent(

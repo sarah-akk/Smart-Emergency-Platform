@@ -11,6 +11,8 @@ initial_state: EmergencyState = {
         "user_input": user_input,
         "location": None,
         "emergency_type": None,
+        "emergency_subtype" : "None" , 
+        "severity" :  "None" , 
         "missing_info": None,
         "safety_tips": None,
         "response_unit": None,
