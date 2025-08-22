@@ -118,5 +118,5 @@ get_missing_info_agent = initialize_agent(
     tools=[get_missing_info],
     llm=llm,
     agent=AgentType.OPENAI_FUNCTIONS,
-    verbose=True,
+    verbose=False,
 )

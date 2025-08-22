@@ -131,5 +131,5 @@ get_safety_tips_agent = initialize_agent(
     tools=[get_safety_tips],
     llm=llm,
     agent=AgentType.OPENAI_FUNCTIONS,
-    verbose=True,
+    verbose=False,
 )

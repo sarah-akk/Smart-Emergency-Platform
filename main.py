@@ -1,11 +1,12 @@
-from agents.emergency_coordinator import EmergencyState, build_emergency_coordinator_graph
+from graphs.emergency_coordinator import EmergencyState, build_emergency_coordinator_graph
+import redis
+import json
+
+
+user_input = input("🚨 الرجاء كتابة بلاغك: ")
 
 graph = build_emergency_coordinator_graph()
 
-# user_input = "في مشاجرة ب مشروع ياسين عند دار الراحة للمسنين سكاكين وخلافو"
-# location = "بناية 12، شارع التحرير"  
-
-user_input = input("🚨 الرجاء كتابة بلاغك: ")
 
 initial_state: EmergencyState = {
         "user_input": user_input,
@@ -15,7 +16,6 @@ initial_state: EmergencyState = {
         "severity" :  "None" , 
         "missing_info": None,
         "safety_tips": None,
-        "response_unit": None,
         "report": "",
     }
 
