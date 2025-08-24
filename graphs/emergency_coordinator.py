@@ -2,7 +2,7 @@
 import json
 from langgraph.graph import StateGraph, END
 from agents.llm_emergency_type_agent import llm_emergency_type_agent
-from agents.emergency_type_agent import emergency_type_agent
+# from agents.emergency_type_agent import emergency_type_agent
 from agents.get_missing_info_agent import get_missing_info_agent
 from agents.get_safety_tips_agent import get_safety_tips_agent
 from agents.check_user_missing_info_agent import check_user_missing_info_agent
