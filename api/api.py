@@ -11,8 +11,8 @@ app = FastAPI()
 graph = build_emergency_coordinator_graph()
 
 # Open ngrok tunnel
-public_url = ngrok.connect(8000)
-print("✅ ngrok tunnel opened:", public_url)
+# public_url = ngrok.connect(8000)
+# print("✅ ngrok tunnel opened:", public_url)
 
 
 @app.post("/answer")

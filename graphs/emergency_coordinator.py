@@ -1,11 +1,13 @@
 # coordinator_graph.py
 import json
 from langgraph.graph import StateGraph, END
+from agents.llm_emergency_type_agent import llm_emergency_type_agent
 from agents.emergency_type_agent import emergency_type_agent
 from agents.get_missing_info_agent import get_missing_info_agent
 from agents.get_safety_tips_agent import get_safety_tips_agent
 from agents.check_user_missing_info_agent import check_user_missing_info_agent
 from typing_extensions import TypedDict
+
 
 
 class EmergencyState(TypedDict):
@@ -29,7 +31,7 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
     if state.get("emergency_type"):
         return state  # النوع موجود مسبقاً → لا حاجة للوكيل
 
-    result = emergency_type_agent.invoke({"input": state["user_input"]})
+    result = llm_emergency_type_agent.invoke({"input": state["user_input"]})
 
     if "intermediate_steps" in result and len(result["intermediate_steps"]) > 0:
         tool_output = result["intermediate_steps"][-1][1]
