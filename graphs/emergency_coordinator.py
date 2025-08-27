@@ -71,7 +71,6 @@ def detect_missing_info(state: EmergencyState) -> EmergencyState:
     missing_info = get_missing_info_agent.run({"input": input_text})
 
     state["ai_response"] = missing_info
-    state["report"] += f"\n📋 معلومات ناقصة مقترحة: {missing_info}"
     return state
 
 
@@ -117,7 +116,7 @@ def check_user_missing_info(state: EmergencyState) -> EmergencyState:
                 state["missing_info"] = ""
             # نضيف المعلومة الجديدة
             state["missing_info"] += useful_info
-            state["report"] += f"\n✅ المستخدم أضاف معلومة مفيدة: {useful_info}"
+            state["report"] += f"\n✅ المستخدم أضاف معلومة جديدة: {useful_info}"
 
     except Exception:
         pass
