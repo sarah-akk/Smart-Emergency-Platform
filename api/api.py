@@ -1,7 +1,5 @@
 import json
 from fastapi import FastAPI, Request
-from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
 from pyngrok import ngrok
 import uvicorn
 

@@ -117,6 +117,6 @@ def get_missing_info(input_text: str) -> str:
 get_missing_info_agent = initialize_agent(
     tools=[get_missing_info],
     llm=llm,
-    agent=AgentType.OPENAI_FUNCTIONS,
+    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=False,
 )
