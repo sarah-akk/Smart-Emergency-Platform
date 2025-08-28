@@ -8,9 +8,8 @@ from graphs.emergency_coordinator import EmergencyState, build_emergency_coordin
 app = FastAPI()
 graph = build_emergency_coordinator_graph()
 
-# Open ngrok tunnel
-# public_url = ngrok.connect(8000)
-# print("✅ ngrok tunnel opened:", public_url)
+public_url = ngrok.connect(8000)
+print("✅ ngrok tunnel opened:", public_url)
 
 
 @app.post("/answer")
@@ -28,7 +27,6 @@ async def process_report(request: Request):
 
     # Extract the user's current message text
     try:
-        user_input = body["body"]["current_message"]["text"]
         print(f"📝 Extracted User Message: '{body["body"]["current_message"]["text"]}'")
     except KeyError:
         print("❌ Error: Could not find ['body']['current_message']['text'] in request")

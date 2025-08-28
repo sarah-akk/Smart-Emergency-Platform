@@ -18,6 +18,7 @@ SUBCLASSES = [
 ]
 
 # ====================== أداة التصنيف باستخدام LLM ======================
+
 @tool(description="يصنف نوع الحالة وخطورتها باستخدام LLM. يجب أن يختار القيم فقط من القوائم المعطاة.")
 def classify_emergency(text: str) -> dict:
     """
@@ -66,12 +67,13 @@ def classify_emergency(text: str) -> dict:
     except Exception as e:
         print("[❌ Error in LLM classification]:", str(e))
         return {
-            "type": "CIVIL",
-            "subtype": "missing_item",
-            "severity": 0.5
+            "type": "",
+            "subtype": "",
+            "severity": ""
         }
 
 # ====================== تهيئة الـ Agent ==========================
+
 llm_emergency_type_agent = initialize_agent(
     tools=[classify_emergency],
     llm=llm,

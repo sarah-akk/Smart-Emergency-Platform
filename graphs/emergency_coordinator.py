@@ -1,6 +1,7 @@
 # coordinator_graph.py
 import json
 from langgraph.graph import StateGraph, END
+from agents.intent_detection_agent import detect_intent
 from agents.llm_emergency_type_agent import llm_emergency_type_agent
 # from agents.emergency_type_agent import emergency_type_agent
 from agents.get_missing_info_agent import get_missing_info_agent
@@ -22,6 +23,22 @@ class EmergencyState(TypedDict):
     missing_info: str | None
     safety_tips: list | None
     report: str
+    not_important: bool
+
+
+
+def detect_intent_node(state: EmergencyState) -> EmergencyState:
+    intent = detect_intent.run(state["user_input"])
+
+    # إذا البلاغ غير مهم → نوقف أي معالجة لاحقة
+    if not intent.get("emergency", False):
+        state["ai_response"] = intent.get("reply", "👋 أهلاً! كيف يمكنني مساعدتك؟")
+        state["not_important"] = True
+        return state
+
+    # البلاغ مهم → نكمل
+    state["not_important"] = False
+    return state
 
 
 # ==============================================================
@@ -31,6 +48,9 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
     if state.get("emergency_type"):
         return state  # النوع موجود مسبقاً → لا حاجة للوكيل
 
+    if state.get("not_important", False):
+        return state
+        
     result = llm_emergency_type_agent.invoke({"input": state["user_input"]})
 
     if "intermediate_steps" in result and len(result["intermediate_steps"]) > 0:
@@ -46,9 +66,9 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
             state["severity"] = float(tool_output["severity"])  # ضمان إرجاع float
             return state
 
-    state["emergency_type"] = "غير معروف"
-    state["emergency_subtype"] = "غير معروف"
-    state["severity"] = "غير معروف"
+    state["emergency_type"] = ""
+    state["emergency_subtype"] = ""
+    state["severity"] = ""
     return state
 
 
@@ -59,6 +79,9 @@ def detect_missing_info(state: EmergencyState) -> EmergencyState:
     if state.get("missing_info") or not state.get("emergency_type"):
         return state  # لا نستدعي الوكيل إذا المعلومات مكتملة أو النوع غير معروف
 
+    if state.get("not_important", False):
+        return state
+
     emergency_type = state.get("emergency_type", "UNKNOWN")
     emergency_subtype = state.get("emergency_subtype", "")
     user_input = state.get("user_input", "")
@@ -68,7 +91,7 @@ def detect_missing_info(state: EmergencyState) -> EmergencyState:
         return state
 
     input_text = f"بلاغ المستخدم: {user_input}\nنوع الطارئ: {emergency_type}\nالنوع الفرعي: {emergency_subtype}"
-    missing_info = get_missing_info_agent.run({"input": input_text})
+    missing_info = get_missing_info_agent.run( input_text)
 
     state["ai_response"] = missing_info
     return state
@@ -80,6 +103,9 @@ def get_safety_tips(state: EmergencyState) -> EmergencyState:
 
     if state.get("safety_tips") or not state.get("missing_info"):
         return state  # إذا موجودة مسبقاً → تجاهل
+
+    if state.get("not_important", False):
+        return state
 
     emergency_type = state.get("emergency_type", "UNKNOWN")
     emergency_subtype = state.get("emergency_subtype", "")
@@ -104,6 +130,9 @@ def check_user_missing_info(state: EmergencyState) -> EmergencyState:
     if not state.get("emergency_type") :
        return state  # لا شيء لنضيفه
 
+    if state.get("not_important", False):
+        return state
+
     user_input = state.get("user_input", "")
 
     input_text = f"بلاغ المستخدم: {user_input}\nنوع الطارئ: {state.get('emergency_type', 'غير معروف')}"
@@ -116,7 +145,7 @@ def check_user_missing_info(state: EmergencyState) -> EmergencyState:
                 state["missing_info"] = ""
             # نضيف المعلومة الجديدة
             state["missing_info"] += useful_info
-            state["report"] += f"\n✅ المستخدم أضاف معلومة جديدة: {useful_info}"
+            state["report"] += f"\n✅ معلومة جديدة: {useful_info}"
 
     except Exception:
         pass
@@ -128,14 +157,18 @@ def check_user_missing_info(state: EmergencyState) -> EmergencyState:
 def build_emergency_coordinator_graph():
     builder = StateGraph(EmergencyState)
 
-    # تعريف جميع النودز بشكل متسلسل
+    # إضافة النود الجديد أولاً
+    builder.add_node("detect_intent_node", detect_intent_node)
     builder.add_node("check_user_missing_info", check_user_missing_info)
     builder.add_node("detect_emergency_type", detect_emergency_type)
     builder.add_node("detect_missing_info", detect_missing_info)
     builder.add_node("get_safety_tips", get_safety_tips)
 
-    builder.set_entry_point("check_user_missing_info")
-    # بعد أي نود → نعود للنود الوسيط decide_next_nodes
+    # نقطة الدخول للنود الجديد
+    builder.set_entry_point("detect_intent_node")
+
+    # إذا البلاغ مهم → نكمل الباقي
+    builder.add_edge("detect_intent_node", "check_user_missing_info")
     builder.add_edge("check_user_missing_info", "detect_emergency_type")
     builder.add_edge("detect_emergency_type", "detect_missing_info")
     builder.add_edge("detect_missing_info", "get_safety_tips")

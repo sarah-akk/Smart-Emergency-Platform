@@ -79,8 +79,6 @@ def get_safety_tips(input_text: str) -> str:
     user_input = user_input_match.group(1).strip() if user_input_match else ""
     emergency_type = emergency_type_match.group(1).strip() if emergency_type_match else "UNKNOWN"
     emergency_subtype = emergency_subtype_match.group(1).strip() if emergency_subtype_match else ""
-
-
     
     tips_example_list = emergency_tips.get(emergency_type, ["لا توجد نصائح متوفرة لهذا النوع من الطوارئ."])
     tips_prompt = "\n".join([f"- {tip}" for tip in tips_example_list])
