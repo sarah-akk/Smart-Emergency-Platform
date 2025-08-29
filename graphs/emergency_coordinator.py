@@ -1,5 +1,4 @@
 # coordinator_graph.py
-import json
 from langgraph.graph import StateGraph, END
 from agents.intent_detection_agent import detect_intent
 from agents.llm_emergency_type_agent import llm_emergency_type_agent
@@ -8,6 +7,7 @@ from agents.get_missing_info_agent import get_missing_info_agent
 from agents.get_safety_tips_agent import get_safety_tips_agent
 from agents.check_user_missing_info_agent import check_user_missing_info_agent
 from typing_extensions import TypedDict
+from llm import llm  
 
 
 
@@ -61,6 +61,21 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
             state["report"] += f"\n⚠️ مستوى الخطورة: {tool_output['severity']}"
             state["report"] +=  f"\n🌐  موقع الحادث: {state['location']}"
 
+            # ✅ استدعاء LLM لعمل ملخص واضح للبلاغ
+            try:
+                summary_prompt = f"""
+                أنت مساعد ذكي متخصص في صياغة بلاغات الطوارئ.
+                مهمتك: إعادة صياغة البلاغ التالي بطريقة رسمية، مختصرة وواضحة، لتكون جاهزة للإرسال إلى فرق الطوارئ:
+                البلاغ: "{state['user_input']}"
+                
+                يجب أن يكون النص الناتج موجزًا، دقيقًا، ورسميًا.
+                """
+                summary_response = llm.predict(summary_prompt).strip()
+                state["report"] += f"\n📝 ملخص البلاغ: {summary_response}"
+            except:
+                # في حال حدوث أي خطأ نضع النص كما هو
+                state["report"] += f"\n📝 ملخص البلاغ: {state['user_input']}"
+                
             state["emergency_type"] = tool_output["type"]
             state["emergency_subtype"] = tool_output["subtype"]
             state["severity"] = float(tool_output["severity"])  # ضمان إرجاع float
@@ -73,6 +88,7 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
 
 
 # ==============================================================
+
 # NODE 2 - الحصول على المعلومات الناقصة
 def detect_missing_info(state: EmergencyState) -> EmergencyState:
 
@@ -145,7 +161,7 @@ def check_user_missing_info(state: EmergencyState) -> EmergencyState:
                 state["missing_info"] = ""
             # نضيف المعلومة الجديدة
             state["missing_info"] += useful_info
-            state["report"] += f"\n✅ معلومة جديدة: {useful_info}"
+            state["report"] += f"\n🆘 معلومة جديدة: {useful_info}"
 
     except Exception:
         pass
