@@ -2,8 +2,8 @@ import re
 import json
 from langchain.agents import initialize_agent, AgentType  # type: ignore
 from langchain.tools import tool  # type: ignore
+from api.llm import llm
 from data.emergency_tips import emergency_tips
-from llm import llm  # type: ignore
 
 # =============================================================>
 

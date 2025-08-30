@@ -8,13 +8,15 @@ from agents.get_safety_tips_agent import get_safety_tips_agent
 from agents.check_user_missing_info_agent import check_user_missing_info_agent
 from typing_extensions import TypedDict
 from data.emergency_types import SUBTYPE_TRANSLATIONS, severity_to_text
-from llm import llm  
+from helpers.extract_history_text import extract_history_text
+from helpers.generate_report_section import generate_report_section
 
 class EmergencyState(TypedDict):
     user_info: dict | None
     user_input: str
     ai_response: str | None
     history: list | None
+    name : str | None
     location: str | None
     emergency_type: str | None
     emergency_subtype: str | None
@@ -27,7 +29,13 @@ class EmergencyState(TypedDict):
 
 
 def detect_intent_node(state: EmergencyState) -> EmergencyState:
-    intent = detect_intent.run(state["user_input"])
+
+    history_text = extract_history_text(state)
+    
+    intent = detect_intent.run({
+        "history": history_text,
+        "text": state["user_input"]
+    })
 
     # إذا البلاغ غير مهم → نوقف أي معالجة لاحقة
     if not intent.get("emergency", False):
@@ -49,7 +57,8 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
 
     if state.get("not_important", False):
         return state
-        
+
+    history_text = extract_history_text(state)    
     result = llm_emergency_type_agent.invoke({"input": state["user_input"]})
 
     if "intermediate_steps" in result and len(result["intermediate_steps"]) > 0:
@@ -61,24 +70,14 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
             state["report"] = (state.get("report") or "") + f"\n🚨 نوع الطوارئ: {arabic_subtype}"
             state["report"] += f"\n⚠️ مستوى الخطورة: {severity_text}"
 
-            # ✅ استدعاء LLM لعمل ملخص واضح للبلاغ
-            try:
-                summary_prompt = f"""
-                أنت مساعد ذكي متخصص في صياغة بلاغات الطوارئ.
-                مهمتك: إعادة صياغة البلاغ التالي بطريقة رسمية، مختصرة وواضحة، لتكون جاهزة للإرسال إلى فرق الطوارئ:
-                البلاغ: "{state['user_input']}"
-                
-                يجب أن يكون النص الناتج موجزًا، دقيقًا، ورسميًا.
-                """
-                summary_response = llm.predict(summary_prompt).strip()
-                state["report"] += f"\n📝: {summary_response}"
-            except:
-                # في حال حدوث أي خطأ نضع النص كما هو
-                state["report"] += f"\n📝: {state['user_input']}"
+            # ✅ استدعاء التابع الجديد لتوليد الملخص والاسم المختصر
+            summary, short_name = generate_report_section(state['user_input'])
+            state["report"] += f"\n📝 البلاغ: {summary}"
+            state["name"] = f"\n{short_name}"
                 
             state["emergency_type"] = tool_output["type"]
             state["emergency_subtype"] = tool_output["subtype"]
-            state["severity"] = float(tool_output["severity"])  # ضمان إرجاع float
+            state["severity"] = float(tool_output["severity"]) 
             return state
 
     state["emergency_type"] = ""
@@ -98,16 +97,14 @@ def detect_missing_info(state: EmergencyState) -> EmergencyState:
     if state.get("not_important", False):
         return state
 
-    emergency_type = state.get("emergency_type", "UNKNOWN")
-    emergency_subtype = state.get("emergency_subtype", "")
-    user_input = state.get("user_input", "")
-
-    if emergency_type == "UNKNOWN":
-        state["missing_info"] = "❌ لا يمكن تحديد المعلومات الناقصة بدون نوع الطارئ."
-        return state
-
-    input_text = f"بلاغ المستخدم: {user_input}\nنوع الطارئ: {emergency_type}\nالنوع الفرعي: {emergency_subtype}"
-    missing_info = get_missing_info_agent.run( input_text)
+    history_text = extract_history_text(state)    
+    input_text = (
+    f"بلاغ المستخدم: {state['user_input']}\n"
+    f"نوع الطارئ: {state['emergency_type']}\n"
+    f"النوع الفرعي: {state['emergency_subtype']}\n"
+    f"تاريخ المحادثة: {history_text}"
+    ) 
+    missing_info = get_missing_info_agent.run(input_text)
 
     state["ai_response"] = missing_info
     return state
@@ -151,7 +148,13 @@ def check_user_missing_info(state: EmergencyState) -> EmergencyState:
 
     user_input = state.get("user_input", "")
 
-    input_text = f"بلاغ المستخدم: {user_input}\nنوع الطارئ: {state.get('emergency_type', 'غير معروف')}"
+    history_text = extract_history_text(state)    
+    input_text = (
+    f"بلاغ المستخدم: {state['user_input']}\n"
+    f"نوع الطارئ: {state['emergency_type']}\n"
+    f"النوع الفرعي: {state['emergency_subtype']}\n"
+    f"تاريخ المحادثة: {history_text}"
+    ) 
 
     # ✅ استدعاء الوكيل باستخدام invoke
     useful_info = check_user_missing_info_agent.run(input_text)

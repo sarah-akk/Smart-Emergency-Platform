@@ -2,8 +2,8 @@ import re
 import json
 from langchain.agents import initialize_agent, AgentType  # type: ignore
 from langchain.tools import tool  # type: ignore
+from api.llm import llm
 from data.emergency_questions import emergency_questions
-from llm import llm  # type: ignore
 
 # =============================================================>
 @tool
@@ -16,10 +16,13 @@ def get_missing_info(input_text: str) -> str:
     user_input_match = re.search(r"بلاغ المستخدم:\s*(.*)", input_text)
     emergency_type_match = re.search(r"نوع الطارئ:\s*(.*)", input_text)
     emergency_subtype_match = re.search(r"النوع الفرعي:\s*(.*)", input_text)
+    conversation_history_match = re.search(r"تاريخ المحادثة:\s*(.*)", input_text)
 
     user_input = user_input_match.group(1).strip() if user_input_match else ""
     emergency_type = emergency_type_match.group(1).strip() if emergency_type_match else "UNKNOWN"
     emergency_subtype = emergency_subtype_match.group(1).strip() if emergency_subtype_match else ""
+    conversation_history = conversation_history_match.group(1).strip() if conversation_history_match else ""
+
 
     # الحصول على الأسئلة المناسبة حسب نوع الطارئ
     questions = emergency_questions.get(emergency_type)
@@ -31,9 +34,9 @@ def get_missing_info(input_text: str) -> str:
     # إعداد البرومبت للـ LLM
     prompt = f"""
 بلاغ المستخدم: {user_input}
-
 ❗️نوع البلاغ: {emergency_type}
 🧩 النوع الفرعي: {emergency_subtype}
+تاريخ المحادثة : {conversation_history}
 
 مهمتك: حدد فقط الأسئلة الناقصة في البلاغ، والتي لم يذكرها المستخدم.
 يمكنك أيضًا استنتاج بعض المعلومات بنفسك إذا لزم الأمر لتحديد ما هو مفقود.

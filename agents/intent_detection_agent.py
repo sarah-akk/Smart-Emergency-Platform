@@ -1,9 +1,9 @@
 from langchain.tools import tool
-from llm import llm
 import json
+from api.llm import llm
 
 @tool(description="تحليل نية المستخدم لمعرفة إن كانت الرسالة بلاغ طارئ أم كلام عادي")
-def detect_intent(text: str) -> dict:
+def detect_intent(history: str, text: str) -> dict:
     """
     يستخدم LLM لتحديد نية المستخدم:
     - إذا كانت الرسالة بلاغ طارئ → نرجع emergency = True
@@ -13,7 +13,8 @@ def detect_intent(text: str) -> dict:
     try:
         prompt = f"""
         أنت مساعد ذكي للطوارئ.
-        مهمتك تحديد نية المستخدم بدقة من النص التالي: "{text}".
+        مهمتك هي **تحديد نية المستخدم بدقة** في الرسالة التالية: **"{text}"**،
+        وذلك **استنادًا إلى سياق وتاريخ المحادثة** التالي: **"{history}"**.
 
         الخيارات المحتملة:
         1. إذا كانت الرسالة **بلاغ طارئ جديد** → emergency = true.
@@ -29,7 +30,6 @@ def detect_intent(text: str) -> dict:
 
         response = llm.predict(prompt)
 
-        # نحاول استخراج JSON من الرد
         try:
             result = json.loads(response)
         except:
@@ -43,7 +43,6 @@ def detect_intent(text: str) -> dict:
                     "reply": "👋 أهلاً! كيف يمكنني مساعدتك؟"
                 }
 
-        # لو الـ LLM رجّع نتيجة ناقصة نضيف القيم الافتراضية
         if "emergency" not in result:
             result["emergency"] = False
         if "reply" not in result:

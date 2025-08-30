@@ -1,7 +1,7 @@
 from langchain.agents import initialize_agent, AgentType
 from langchain.tools import tool
+from api.llm import llm
 from data.emergency_types import CLASSES, SUBCLASSES
-from llm import llm  # ✅ Your OpenAI LLM instance
 import json
 
 
