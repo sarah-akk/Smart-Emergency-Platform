@@ -71,10 +71,10 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
                 يجب أن يكون النص الناتج موجزًا، دقيقًا، ورسميًا.
                 """
                 summary_response = llm.predict(summary_prompt).strip()
-                state["report"] += f"\n📝 ملخص البلاغ: {summary_response}"
+                state["report"] += f"\n📝: {summary_response}"
             except:
                 # في حال حدوث أي خطأ نضع النص كما هو
-                state["report"] += f"\n📝 ملخص البلاغ: {state['user_input']}"
+                state["report"] += f"\n📝: {state['user_input']}"
                 
             state["emergency_type"] = tool_output["type"]
             state["emergency_subtype"] = tool_output["subtype"]
