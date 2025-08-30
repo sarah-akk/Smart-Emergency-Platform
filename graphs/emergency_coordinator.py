@@ -7,9 +7,8 @@ from agents.get_missing_info_agent import get_missing_info_agent
 from agents.get_safety_tips_agent import get_safety_tips_agent
 from agents.check_user_missing_info_agent import check_user_missing_info_agent
 from typing_extensions import TypedDict
+from data.emergency_types import SUBTYPE_TRANSLATIONS, severity_to_text
 from llm import llm  
-
-
 
 class EmergencyState(TypedDict):
     user_info: dict | None
@@ -56,10 +55,11 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
     if "intermediate_steps" in result and len(result["intermediate_steps"]) > 0:
         tool_output = result["intermediate_steps"][-1][1]
         if isinstance(tool_output, dict):
-            state["report"] = (state.get("report") or "") + f"\n🚨 نوع الطوارئ: {tool_output['type']}"
-            state["report"] += f"\n🔹 النوع الفرعي: {tool_output['subtype']}"
-            state["report"] += f"\n⚠️ مستوى الخطورة: {tool_output['severity']}"
-            state["report"] +=  f"\n🌐  موقع الحادث: {state['location']}"
+            arabic_subtype = SUBTYPE_TRANSLATIONS.get(tool_output['subtype'], "طوارئ غير معروفة")
+            severity_text = severity_to_text(tool_output['severity'])
+
+            state["report"] = (state.get("report") or "") + f"\n🚨 نوع الطوارئ: {arabic_subtype}"
+            state["report"] += f"\n⚠️ مستوى الخطورة: {severity_text}"
 
             # ✅ استدعاء LLM لعمل ملخص واضح للبلاغ
             try:
@@ -161,7 +161,7 @@ def check_user_missing_info(state: EmergencyState) -> EmergencyState:
                 state["missing_info"] = ""
             # نضيف المعلومة الجديدة
             state["missing_info"] += useful_info
-            state["report"] += f"\n🆘 معلومة جديدة: {useful_info}"
+            state["report"] += f"\n🆘 معلومة جديدة: {useful_info.split(':', 1)[-1].strip()}"
 
     except Exception:
         pass

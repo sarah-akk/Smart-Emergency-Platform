@@ -1,21 +1,9 @@
 from langchain.agents import initialize_agent, AgentType
 from langchain.tools import tool
+from data.emergency_types import CLASSES, SUBCLASSES
 from llm import llm  # ✅ Your OpenAI LLM instance
 import json
 
-# ========================= التصنيفات المعتمدة ==========================
-CLASSES = [
-    "CIVIL", "POLICE", "MEDICAL", "TRAFFIC", "FIRE"
-]
-
-SUBCLASSES = [
-    "missing_item", "stolen_car", "theft", "complaint", "armed_robbery",
-    "found_item", "missing_person", "body", "road_obstruction", "violent_crime",
-    "verbal_abuse", "fight", "blood_donation_req", "gun_fight", "missing_person_found",
-    "explosion", "cardiac_arrest", "kidnapping", "murder", "charity",
-    "gunwound", "unconscious", "major_accident", "structure_fire", "vandalism",
-    "wildfire", "warning", "fallen", "rouge_faction", "unknown_fire"
-]
 
 # ====================== أداة التصنيف باستخدام LLM ======================
 
