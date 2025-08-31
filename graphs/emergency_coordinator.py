@@ -72,8 +72,8 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
 
             # ✅ استدعاء التابع الجديد لتوليد الملخص والاسم المختصر
             summary, short_name = generate_report_section(state['user_input'])
-            state["report"] += f"\n📝 البلاغ: {summary}"
             state["name"] = f"\n{short_name}"
+            state["report"] += f"\n📝 البلاغ: {summary}"
                 
             state["emergency_type"] = tool_output["type"]
             state["emergency_subtype"] = tool_output["subtype"]
@@ -120,11 +120,15 @@ def get_safety_tips(state: EmergencyState) -> EmergencyState:
     if state.get("not_important", False):
         return state
 
-    emergency_type = state.get("emergency_type", "UNKNOWN")
-    emergency_subtype = state.get("emergency_subtype", "")
-    user_input = state.get("user_input", "")
+    history_text = extract_history_text(state)    
 
-    input_text = f"بلاغ المستخدم: {user_input}\nنوع الطارئ: {emergency_type}\nالنوع الفرعي: {emergency_subtype}"
+    input_text = (
+    f"بلاغ المستخدم: {state['user_input']}\n"
+    f"نوع الطارئ: {state['emergency_type']}\n"
+    f"النوع الفرعي: {state['emergency_subtype']}\n"
+    f"تاريخ المحادثة: {history_text}"
+    ) 
+
     safety_tips = get_safety_tips_agent.run({"input": input_text})
 
     state["safety_tips"] = safety_tips

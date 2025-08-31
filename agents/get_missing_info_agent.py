@@ -23,13 +23,18 @@ def get_missing_info(input_text: str) -> str:
     emergency_subtype = emergency_subtype_match.group(1).strip() if emergency_subtype_match else ""
     conversation_history = conversation_history_match.group(1).strip() if conversation_history_match else ""
 
-
     # الحصول على الأسئلة المناسبة حسب نوع الطارئ
     questions = emergency_questions.get(emergency_type)
     if not questions:
         return f"❌ نوع الطارئ غير معروف: {emergency_type}"
 
-    questions_prompt = "\n".join([f"- {q}" for q in questions])
+    # ✅ استبعاد أي سؤال يتعلق بالشرطة نهائيًا
+    filtered_questions = [
+        q for q in questions
+        if not re.search(r"شرطة|الشرطة|اتصال|الاتصال", q, re.IGNORECASE)
+    ]
+
+    questions_prompt = "\n".join([f"- {q}" for q in filtered_questions])
 
     # إعداد البرومبت للـ LLM
     prompt = f"""
@@ -41,7 +46,7 @@ def get_missing_info(input_text: str) -> str:
 مهمتك: حدد فقط الأسئلة الناقصة في البلاغ، والتي لم يذكرها المستخدم.
 يمكنك أيضًا استنتاج بعض المعلومات بنفسك إذا لزم الأمر لتحديد ما هو مفقود.
 
-الأسئلة التالية موجودة فقط للمساعدة، ويمكنك الاعتماد عليها لتحديد ما هو ناقص:
+الأسئلة التالية موجودة فقط للمساعدة:
 
 {questions_prompt}
 
@@ -59,6 +64,12 @@ def get_missing_info(input_text: str) -> str:
     try:
         match = re.search(r"\[.*?\]", response.content, re.DOTALL)
         missing_questions = json.loads(match.group(0)) if match else []
+
+        # ✅ استبعاد أي أسئلة عن الشرطة حتى لو أعادها الـ LLM
+        missing_questions = [
+            q for q in missing_questions
+            if not re.search(r"شرطة|الشرطة|اتصال|الاتصال", q, re.IGNORECASE)
+        ]
 
         # إذا وجد أسئلة ناقصة
         if missing_questions:
