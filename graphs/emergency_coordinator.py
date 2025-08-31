@@ -1,5 +1,7 @@
 # coordinator_graph.py
+import json
 from langgraph.graph import StateGraph, END
+from agents.decide_next_step_agent import decide_next_step_agent
 from agents.intent_detection_agent import detect_intent
 from agents.llm_emergency_type_agent import llm_emergency_type_agent
 # from agents.emergency_type_agent import emergency_type_agent
@@ -16,18 +18,21 @@ class EmergencyState(TypedDict):
     user_input: str
     ai_response: str | None
     history: list | None
-    name : str | None
     location: str | None
     emergency_type: str | None
     emergency_subtype: str | None
     severity: str | None
     missing_info: str | None
     safety_tips: list | None
+    next_step : str | None
+    name : str | None
+    discription : str | None
     report: str
     not_important: bool
 
-
-
+# ==============================================================
+# NODE  - تحديد نية المستخدم
+# ==============================================================
 def detect_intent_node(state: EmergencyState) -> EmergencyState:
 
     history_text = extract_history_text(state)
@@ -49,7 +54,9 @@ def detect_intent_node(state: EmergencyState) -> EmergencyState:
 
 
 # ==============================================================
-# NODE 1 - تحديد نوع الطارئ
+# NODE  - تحديد نوع الطارئ
+# ==============================================================
+
 def detect_emergency_type(state: EmergencyState) -> EmergencyState:
 
     if state.get("emergency_type"):
@@ -73,6 +80,7 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
             # ✅ استدعاء التابع الجديد لتوليد الملخص والاسم المختصر
             summary, short_name = generate_report_section(state['user_input'])
             state["name"] = f"\n{short_name}"
+            state["discription"] = f"\n{summary}"
             state["report"] += f"\n📝 البلاغ: {summary}"
                 
             state["emergency_type"] = tool_output["type"]
@@ -87,14 +95,15 @@ def detect_emergency_type(state: EmergencyState) -> EmergencyState:
 
 
 # ==============================================================
+# NODE  - الحصول على المعلومات الناقصة
+# ==============================================================
 
-# NODE 2 - الحصول على المعلومات الناقصة
 def detect_missing_info(state: EmergencyState) -> EmergencyState:
 
-    if state.get("missing_info") or not state.get("emergency_type"):
-        return state  # لا نستدعي الوكيل إذا المعلومات مكتملة أو النوع غير معروف
+    if not state.get("emergency_type"):
+        return state 
 
-    if state.get("not_important", False):
+    if state.get("not_important", False) or state["next_step"] == "get_safety_tips" or state["next_step"] == "terminated":
         return state
 
     history_text = extract_history_text(state)    
@@ -111,13 +120,12 @@ def detect_missing_info(state: EmergencyState) -> EmergencyState:
 
 
 # ==============================================================
-# NODE 3 - الحصول على إرشادات السلامة
+# NODE  - الحصول على إرشادات السلامة
+# ==============================================================
+
 def get_safety_tips(state: EmergencyState) -> EmergencyState:
 
-    if state.get("safety_tips") or not state.get("missing_info"):
-        return state  # إذا موجودة مسبقاً → تجاهل
-
-    if state.get("not_important", False):
+    if state.get("not_important", False) or state["next_step"] == "detect_missing_info" or state["next_step"] == "terminated":
         return state
 
     history_text = extract_history_text(state)    
@@ -137,7 +145,8 @@ def get_safety_tips(state: EmergencyState) -> EmergencyState:
 
 
 # ==============================================================
-# NODE 4 - التحقق الذكي من المعلومة الجديدة
+# NODE  - التحقق الذكي من المعلومة الجديدة
+# ==============================================================
 
 def check_user_missing_info(state: EmergencyState) -> EmergencyState:
     """
@@ -176,6 +185,37 @@ def check_user_missing_info(state: EmergencyState) -> EmergencyState:
     return state
 
 # ==============================================================
+# NODE  - التحقق الذكي من المعلومة الجديدة
+# ==============================================================
+def decide_next_step(state: EmergencyState) -> EmergencyState:
+    """
+    نود ذكية تستعمل LLM لتحديد ما إذا كان يجب طلب المزيد من المعلومات أو تقديم نصائح السلامة.
+    """
+    if state.get("not_important", False):
+        return state
+
+    history_text = extract_history_text(state)
+    input_text = (
+        f"بلاغ المستخدم: {state['user_input']}\n"
+        f"نوع الطارئ: {state.get('emergency_type')}\n"
+        f"النوع الفرعي: {state.get('emergency_subtype')}\n"
+        f"المعلومات الحالية: {state.get('missing_info') or 'غير متوفرة'}\n"
+        f"تاريخ المحادثة:\n{history_text}"
+    )
+
+    decision = decide_next_step_agent.run(input_text)
+
+    if isinstance(decision, str):
+        try:
+            decision = json.loads(decision)
+        except:
+            decision = {"next_step": "get_safety_tips", "reason": "تعذر التحليل."}
+
+    state["next_step"] = decision["next_step"]
+    return state
+
+# ==============================================================
+
 
 def build_emergency_coordinator_graph():
     builder = StateGraph(EmergencyState)
@@ -184,6 +224,7 @@ def build_emergency_coordinator_graph():
     builder.add_node("detect_intent_node", detect_intent_node)
     builder.add_node("check_user_missing_info", check_user_missing_info)
     builder.add_node("detect_emergency_type", detect_emergency_type)
+    builder.add_node("decide_next_step", decide_next_step)
     builder.add_node("detect_missing_info", detect_missing_info)
     builder.add_node("get_safety_tips", get_safety_tips)
 
@@ -193,7 +234,8 @@ def build_emergency_coordinator_graph():
     # إذا البلاغ مهم → نكمل الباقي
     builder.add_edge("detect_intent_node", "check_user_missing_info")
     builder.add_edge("check_user_missing_info", "detect_emergency_type")
-    builder.add_edge("detect_emergency_type", "detect_missing_info")
+    builder.add_edge("detect_emergency_type", "decide_next_step")
+    builder.add_edge("decide_next_step", "detect_missing_info")
     builder.add_edge("detect_missing_info", "get_safety_tips")
     builder.add_edge("get_safety_tips", END)
 

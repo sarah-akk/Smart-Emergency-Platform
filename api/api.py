@@ -44,7 +44,6 @@ async def process_report(request: Request):
         "ai_response": "",
         "history": body.get("body", {}).get("history", []),
         "location": body.get("body", {}).get("current_message", {}).get("location", {}).get("address", ""),
-
         "emergency_type": state_data.get("emergency_type"),
         "emergency_subtype": state_data.get("emergency_subtype"),
         "severity": state_data.get("severity"),
@@ -75,7 +74,11 @@ async def process_report(request: Request):
             "severity" : final_state.get("severity", ""),
             "missing_info" : final_state.get("missing_info", ""),
             "safety_tips" : final_state.get("safety_tips", ""),
-            "report" : final_state.get("report", ""),   
+            "report" : {
+                "name" :  final_state.get("name", ""),  
+                "discription" :  final_state.get("discription", ""),  
+                "text" :  final_state.get("report", ""),  
+            } 
         }
     }
 

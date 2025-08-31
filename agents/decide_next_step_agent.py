@@ -1,35 +1,50 @@
 from langchain.tools import tool
 from api.llm import llm
 import json
+import re
 
-@tool(description="يقرر ما إذا كان يجب طلب المزيد من المعلومات أو تقديم نصائح السلامة.")
+@tool(description="يقرر ما إذا كان يجب طلب المزيد من المعلومات أو تقديم نصائح السلامة أو إنهاء المحادثة.")
 def decide_next_step_agent(input_text: str) -> str:
     """
-    يستعمل LLM ليقرر ما إذا كنا بحاجة إلى معلومات إضافية أم يمكننا الانتقال مباشرة إلى نصائح السلامة.
+    يستعمل LLM ليقرر:
+    1. هل نحتاج إلى المزيد من التفاصيل؟
+    2. أم يجب تقديم نصائح السلامة؟
+    3. أم يمكن إنهاء المحادثة إذا اكتملت جميع المعلومات وتم تقديم النصائح؟
     """
     prompt = f"""
-    أنت مساعد ذكي في إدارة الطوارئ.
-    بناءً على المعلومات التالية، قرر ما إذا كان ينبغي طلب المزيد من التفاصيل أو إعطاء نصائح السلامة مباشرة.
+    أنت مساعد ذكي لإدارة الطوارئ.
+    مهمتك هي تحليل حالة المحادثة الحالية وتحديد الخطوة التالية فقط.
 
-    {input_text}
+    - إذا كانت هناك معلومات أساسية ناقصة → أعد "detect_missing_info".
+    - إذا كانت المعلومات مكتملة لكن لم نقدم نصائح بعد → أعد "get_safety_tips".
+    - إذا اكتملت جميع المعلومات وتم إعطاء نصائح السلامة → أعد "terminated".
 
-    اختر أحد الخيارين فقط وأعد النتيجة في صيغة JSON:
+    أعد النتيجة في صيغة JSON فقط:
     {{
-        "next_step": "detect_missing_info" أو "get_safety_tips",
-        "reason": "سبب القرار هنا"
+        "next_step": "detect_missing_info" أو "get_safety_tips" أو "terminated",
+        "reason": "اشرح سبب القرار هنا"
     }}
+
+    السياق:
+    {input_text}
     """
 
+    # استدعاء LLM
     response = llm.predict(prompt)
 
     try:
+        # محاولة تحليل الاستجابة كـ JSON مباشرة
         result = json.loads(response)
     except:
-        import re
+        # محاولة استخراج JSON من داخل الرد باستخدام Regex
         json_str = re.search(r"\{.*\}", response, re.S)
         if json_str:
             result = json.loads(json_str.group())
         else:
-            result = {"next_step": "get_safety_tips", "reason": "تعذر التحليل، الانتقال مباشرة لإعطاء النصائح."}
+            # fallback في حالة الفشل التام → نرجع إلى تقديم النصائح
+            result = {
+                "next_step": "get_safety_tips",
+                "reason": "تعذر التحليل، الانتقال لإعطاء النصائح."
+            }
 
     return result
