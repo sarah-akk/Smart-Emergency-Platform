@@ -8,8 +8,8 @@ from graphs.emergency_coordinator import EmergencyState, build_emergency_coordin
 app = FastAPI()
 graph = build_emergency_coordinator_graph()
 
-# public_url = ngrok.connect(8000)
-# print("✅ ngrok tunnel opened:", public_url)
+public_url = ngrok.connect(8000)
+print("✅ ngrok tunnel opened:", public_url)
 
 
 @app.post("/answer")
@@ -49,7 +49,9 @@ async def process_report(request: Request):
         "severity": state_data.get("severity"),
         "missing_info": state_data.get("missing_info"),
         "safety_tips": state_data.get("safety_tips"),
-        "report": state_data.get("report"),
+        "name": state_data.get("report", {}).get("name"),
+        "discription": state_data.get("report", {}).get("discription"),
+        "report": state_data.get("report", {}).get("text"),
     }
 
 
