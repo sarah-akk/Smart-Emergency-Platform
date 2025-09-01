@@ -8,8 +8,8 @@ from graphs.emergency_coordinator import EmergencyState, build_emergency_coordin
 app = FastAPI()
 graph = build_emergency_coordinator_graph()
 
-public_url = ngrok.connect(8000)
-print("✅ ngrok tunnel opened:", public_url)
+# public_url = ngrok.connect(8000)
+# print("✅ ngrok tunnel opened:", public_url)
 
 
 @app.post("/answer")
