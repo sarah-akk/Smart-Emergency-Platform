@@ -14,14 +14,16 @@ def get_safety_tips(input_text: str) -> str:
     يرجع JSON فقط يحتوي قائمة نصائح السلامة.
     """
 
-    # استخراج بيانات البلاغ
+    # استخراج البيانات الأساسية من البلاغ
     user_input_match = re.search(r"بلاغ المستخدم:\s*(.*)", input_text)
     emergency_type_match = re.search(r"نوع الطارئ:\s*(.*)", input_text)
     emergency_subtype_match = re.search(r"النوع الفرعي:\s*(.*)", input_text)
+    conversation_history_match = re.search(r"تاريخ المحادثة:\s*(.*)", input_text)
 
     user_input = user_input_match.group(1).strip() if user_input_match else ""
     emergency_type = emergency_type_match.group(1).strip() if emergency_type_match else "UNKNOWN"
     emergency_subtype = emergency_subtype_match.group(1).strip() if emergency_subtype_match else ""
+    conversation_history = conversation_history_match.group(1).strip() if conversation_history_match else ""
 
     # جلب النصائح المبدئية حسب النوع
     tips_example_list = emergency_tips.get(emergency_type, ["لا توجد نصائح متوفرة لهذا النوع من الطوارئ."])
@@ -35,11 +37,9 @@ def get_safety_tips(input_text: str) -> str:
 بلاغ المستخدم: {user_input}
 نوع الطارئ: {emergency_type}
 نوع الطارئ الفرعي: {emergency_subtype}
+تاريخ المحادثة : {conversation_history}
 
 يرجى تقديم نصائح وإرشادات سلامة مناسبة لهذا الموقف.
-
-الأسئلة التالية موجودة فقط للمساعدة:
-{tips_prompt}
 
 بالإضافة إلى ذلك، يمكنك الإبداع في تقديم نصائح إضافية تراها مناسبة للموقف حتى لو لم تكن ضمن الأسئلة.
 

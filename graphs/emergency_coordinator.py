@@ -103,11 +103,11 @@ def detect_missing_info(state: EmergencyState) -> EmergencyState:
     if not state.get("emergency_type"):
         return state 
 
-    # if state.get("not_important", False) or state["next_step"] == "get_safety_tips" or state["next_step"] == "terminated":
-    #     return state
+    if state.get("not_important", False) or state["next_step"] == "get_safety_tips" or state["next_step"] == "terminated":
+        return state
 
-    if state.get("missing_info") or not state.get("emergency_type"):
-       return state
+    # if state.get("missing_info") or not state.get("emergency_type"):
+    #    return state
 
     history_text = extract_history_text(state)    
     input_text = (
@@ -116,7 +116,7 @@ def detect_missing_info(state: EmergencyState) -> EmergencyState:
     f"النوع الفرعي: {state['emergency_subtype']}\n"
     f"تاريخ المحادثة: {history_text}"
     ) 
-    missing_info = get_missing_info_agent.run(input_text)
+    missing_info = get_missing_info_agent.run({"input": input_text})
 
     state["ai_response"] = missing_info
     return state
@@ -128,11 +128,11 @@ def detect_missing_info(state: EmergencyState) -> EmergencyState:
 
 def get_safety_tips(state: EmergencyState) -> EmergencyState:
 
-    # if state.get("not_important", False) or state["next_step"] == "detect_missing_info" or state["next_step"] == "terminated":
-    #     return state
+    if state.get("not_important", False) or state["next_step"] == "detect_missing_info" or state["next_step"] == "terminated":
+        return state
 
-    if state.get("safety_tips") or not state.get("missing_info"):
-        return state  
+    # if state.get("safety_tips") or not state.get("missing_info"):
+    #     return state  
 
     history_text = extract_history_text(state)    
 
@@ -208,7 +208,8 @@ def decide_next_step(state: EmergencyState) -> EmergencyState:
         f"تاريخ المحادثة:\n{history_text}"
     )
     
-    print("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" + input_text)
+    print(input_text)
+
     decision = decide_next_step_agent.run(input_text)
 
     if isinstance(decision, str):
