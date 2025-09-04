@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import json
 from fastapi import FastAPI, Request
 from pyngrok import ngrok
@@ -69,7 +70,7 @@ async def process_report(request: Request):
 
     # ✅ Return custom response
     return {
-        "message": final_state.get("ai_response", ""),
+        "message": NULL if final_state.get("next_step") == "terminated" else final_state.get("ai_response", ""),
         "state": {
             "emergency_type" : final_state.get("emergency_type", ""),
             "emergency_subtype" : final_state.get("emergency_subtype", ""),

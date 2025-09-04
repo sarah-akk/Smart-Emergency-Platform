@@ -193,13 +193,30 @@ def check_user_missing_info(state: EmergencyState) -> EmergencyState:
 # ==============================================================
 # NODE  - التحقق الذكي من المعلومة الجديدة
 # ==============================================================
-def decide_next_step(state: EmergencyState) -> EmergencyState:
+def decide_next_step(state: dict) -> dict:
     """
     نود ذكية تستعمل LLM لتحديد ما إذا كان يجب طلب المزيد من المعلومات أو تقديم نصائح السلامة.
+    إذا تجاوزت رسائل الـ AI في تاريخ المحادثة 5 رسائل → يتم إنهاء المحادثة.
     """
+    # إذا كان البلاغ غير مهم
     if state.get("not_important", False):
         return state
 
+    # ✅ حساب عدد رسائل المساعد (AI) من تاريخ المحادثة
+    ai_messages_count = 0
+    if state.get("history") and isinstance(state["history"], dict):
+        for k, msg in state["history"].items():
+            if isinstance(msg, dict):
+                # إذا كانت الرسالة من المساعد وليس من المستخدم
+                if msg.get("state") is None:  # حسب منطق extract_history_text
+                    ai_messages_count += 1
+
+    # ✅ إذا تجاوزت رسائل AI أكثر من 5 → إنهاء المحادثة
+    if ai_messages_count > 5:
+        state["next_step"] = "terminated"
+        return state
+
+    # تجهيز نص الإدخال للـ LLM
     history_text = extract_history_text(state)
     input_text = (
         f"بلاغ المستخدم: {state['user_input']}\n"
@@ -207,11 +224,13 @@ def decide_next_step(state: EmergencyState) -> EmergencyState:
         f"النوع الفرعي: {state.get('emergency_subtype')}\n"
         f"تاريخ المحادثة:\n{history_text}"
     )
-    
+
     print(input_text)
 
+    # استدعاء LLM لاتخاذ القرار
     decision = decide_next_step_agent.run(input_text)
 
+    # معالجة النتيجة
     if isinstance(decision, str):
         try:
             decision = json.loads(decision)
@@ -220,6 +239,7 @@ def decide_next_step(state: EmergencyState) -> EmergencyState:
 
     state["next_step"] = decision["next_step"]
     return state
+
 
 # ==============================================================
 
