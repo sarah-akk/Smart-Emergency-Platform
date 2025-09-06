@@ -48,8 +48,9 @@ def classify_emergency(text: str) -> dict:
         # التأكد من أن القيم مسموحة
         if result["type"] not in CLASSES:
             result["type"] = "CIVIL"
-        if result["subtype"] not in SUBCLASSES:
-            result["subtype"] = "missing_item"
+        valid_subtypes = SUBCLASSES.get(result["type"], [])
+        if result["subtype"] not in valid_subtypes:
+            result["subtype"] = valid_subtypes[0] if valid_subtypes else "other"
         result["severity"] = float(result.get("severity", 0.5))
 
         return result
