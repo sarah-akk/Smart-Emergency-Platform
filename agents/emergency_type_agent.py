@@ -1,9 +1,9 @@
 from langchain.agents import initialize_agent, AgentType
 from langchain.tools import tool
-from llm import llm
 import tensorflow as tf
 import pickle
 import numpy as np
+from api.llm import llm
 
 # ========================= تحميل الملفات ==========================
 with open("Models/preprocessing_objects.pkl", "rb") as f:

@@ -17,14 +17,16 @@ def classify_emergency(text: str) -> dict:
         You are an emergency classification assistant.
         Given the Arabic incident description: "{text}", 
         classify it into:
-        - "type": one of {json.dumps(CLASSES)}
-        - "subtype": one of {json.dumps(SUBCLASSES)}
-        - "severity": a float number between 0 and 1 indicating severity (0 = low, 1 = extremely critical).
+
+        1. "type": choose ONLY one from {json.dumps(CLASSES)}
+        2. "subtype": after selecting the type, choose ONLY from the corresponding list below:
+           {json.dumps(SUBCLASSES, ensure_ascii=False)}
+        3. "severity": a float number between 0 and 1 indicating severity (0 = low, 1 = extremely critical).
 
         Respond ONLY in JSON format, like this:
         {{
-            "type": "...",
-            "subtype": "...",
+            "type": "POLICE",
+            "subtype": "stolen_car",
             "severity": 0.85
         }}
         """

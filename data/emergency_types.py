@@ -3,14 +3,49 @@ CLASSES = [
     "CIVIL", "POLICE", "MEDICAL", "TRAFFIC", "FIRE"
 ]
 
-SUBCLASSES = [
-    "missing_item", "stolen_car", "theft", "complaint", "armed_robbery",
-    "found_item", "missing_person", "body", "road_obstruction", "violent_crime",
-    "verbal_abuse", "fight", "blood_donation_req", "gun_fight", "missing_person_found",
-    "explosion", "cardiac_arrest", "kidnapping", "murder", "charity",
-    "gunwound", "unconscious", "major_accident", "structure_fire", "vandalism",
-    "wildfire", "warning", "fallen", "rouge_faction", "unknown_fire"
-]
+SUBCLASSES = {
+    "CIVIL": [
+        "missing_item",
+        "complaint",
+        "found_item",
+        "blood_donation_req",
+        "charity",
+        "warning"
+    ],
+    "POLICE": [
+        "stolen_car",
+        "theft",
+        "armed_robbery",
+        "missing_person",
+        "violent_crime",
+        "verbal_abuse",
+        "fight",
+        "gun_fight",
+        "missing_person_found",
+        "explosion",
+        "kidnapping",
+        "murder",
+        "vandalism",
+        "rouge_faction"
+    ],
+    "MEDICAL": [
+        "body",
+        "cardiac_arrest",
+        "gunwound",
+        "unconscious",
+        "fallen"
+    ],
+    "TRAFFIC": [
+        "road_obstruction",
+        "major_accident"
+    ],
+    "FIRE": [
+        "structure_fire",
+        "wildfire",
+        "unknown_fire"
+    ]
+}
+
 
 # 🟢 خريطة لترجمة نوع الطوارئ من الإنجليزية إلى العربية
 SUBTYPE_TRANSLATIONS = {
